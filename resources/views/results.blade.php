@@ -13,6 +13,6 @@
 <div class="container" id="app">
  <result-component></result-component>
 </div>
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

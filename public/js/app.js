@@ -1880,6 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _apis_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Match */ "./resources/js/apis/Match.js");
 //
 //
 //
@@ -1993,11 +1994,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      week: 0
+      week: 1,
+      weeklyMatch: {}
     };
+  },
+  computed: {
+    nextWeekButtonDisabled: function nextWeekButtonDisabled() {
+      if (this.week >= 8) {
+        return true;
+      }
+
+      return false;
+    }
+  },
+  created: function created() {
+    this.weeklyMatchCall();
+  },
+  methods: {
+    weeklyMatchCall: function weeklyMatchCall() {
+      var _this = this;
+
+      _apis_Match__WEBPACK_IMPORTED_MODULE_0__.default.getWeeksMatch(this.week).then(function (response) {
+        _this.weeklyMatch = response.data;
+      });
+    },
+    goNextWeek: function goNextWeek() {
+      this.week = this.week + 1;
+      this.weeklyMatchCall();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/apis/Api.js":
+/*!**********************************!*\
+  !*** ./resources/js/apis/Api.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var Api = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+  baseURL: '/api/simulation'
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Api);
+
+/***/ }),
+
+/***/ "./resources/js/apis/Match.js":
+/*!************************************!*\
+  !*** ./resources/js/apis/Match.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/apis/Api.js");
+
+var END_POINT = 'weekly-match';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getWeeksMatch: function getWeeksMatch(week) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT + '/' + week);
   }
 });
 
@@ -37708,17 +37796,70 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "row text-center mb-5" }, [
+      _c("h2", [_vm._v(" Week " + _vm._s(this.week) + " match result")])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "row" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(this.week) +
-                " Match Results\n                "
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                attrs: { disabled: this.nextWeekButtonDisabled },
+                on: {
+                  click: function($event) {
+                    return _vm.goNextWeek()
+                  }
+                }
+              },
+              [_vm._v("Next Week")]
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "p",
+              {
+                staticStyle: { "text-align": "center", "font-weight": "bold" }
+              },
+              [_vm._v(_vm._s(this.week) + " week Match Results")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticStyle: { display: "flex" } }, [
+              _c("div", { staticStyle: { flex: "1 0" } }, [
+                _vm._v(
+                  "\n                            " +
+                    _vm._s(this.weeklyMatch.host_team_name) +
+                    "\n                        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticStyle: { padding: "0 5px" } }, [
+                _vm._v(
+                  "\n                            " +
+                    _vm._s(this.weeklyMatch.host_team_goals) +
+                    " - " +
+                    _vm._s(this.weeklyMatch.guest_team_goals) +
+                    "\n                        "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticStyle: { flex: "1 0", "text-align": "right" } },
+                [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(this.weeklyMatch.guest_team_name) +
+                      "\n                        "
+                  )
+                ]
+              )
+            ])
           ])
         ])
       ]),
@@ -37732,94 +37873,90 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-8" }, [
-      _c("table", { staticClass: "table table-striped" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Teams")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("PTS")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("P")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("W")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("D")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td", [_vm._v("Chelsea")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("13")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("5")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("4")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("0")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("14")])
-          ]),
+    return _c("table", { staticClass: "table table-striped" }, [
+      _c("thead", [
+        _c("tr", [
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Teams")]),
           _vm._v(" "),
-          _c("tr", [
-            _c("td", [_vm._v("Arsenal")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("13")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("5")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("4")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("0")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("14")])
-          ]),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("PTS")]),
           _vm._v(" "),
-          _c("tr", [
-            _c("td", [_vm._v("Manchester City")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("13")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("5")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("4")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("0")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("14")])
-          ]),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("P")]),
           _vm._v(" "),
-          _c("tr", [
-            _c("td", [_vm._v("Liverpool")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("13")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("5")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("4")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("0")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("14")])
-          ])
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("W")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("D")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
         ])
       ]),
       _vm._v(" "),
-      _c("button", [_vm._v("Next Week")])
+      _c("tbody", [
+        _c("tr", [
+          _c("td", [_vm._v("Chelsea")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("13")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("5")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("4")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("1")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("14")])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("Arsenal")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("13")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("5")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("4")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("1")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("14")])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("Manchester City")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("13")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("5")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("4")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("1")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("14")])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("Liverpool")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("13")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("5")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("4")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("1")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("14")])
+        ])
+      ])
     ])
   },
   function() {
@@ -53259,6 +53396,18 @@ Vue.compile = compileToFunctions;
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

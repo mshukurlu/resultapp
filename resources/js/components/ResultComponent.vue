@@ -1,9 +1,14 @@
 <template>
     <div>
+        <div class="row text-center mb-5">
+            <h2> Week {{this.week}} match result</h2>
+        </div>
         <div class="row">
             <div class="col-md-8">
+
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
+
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -56,11 +61,23 @@
                             </tbody>
                         </table>
 
-                        <button>Next Week</button>
+                        <button @click="goNextWeek()" :disabled="this.nextWeekButtonDisabled">Next Week</button>
                     </div>
 
-                    <div class="col-md-4">
-                        {{this.week}} Match Results
+                    <div class="col-md-6">
+                        <p style="text-align: center; font-weight: bold">{{this.week}} week Match Results</p>
+
+                        <div style="display: flex">
+                            <div style="flex: 1 0">
+                                {{ this.weeklyMatch.host_team_name }}
+                            </div>
+                            <div style="padding: 0 5px">
+                                {{this.weeklyMatch.host_team_goals}} - {{this.weeklyMatch.guest_team_goals}}
+                            </div>
+                            <div style="flex:1 0;text-align: right">
+                                {{ this.weeklyMatch.guest_team_name }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -112,13 +129,42 @@
     </div>
 </template>
 <script>
+import Match from "../apis/Match";
 export default {
 
   data()
   {
       return {
-          week:0
+          week:1,
+          weeklyMatch: {}
       }
-  }
+  },
+    computed:
+        {
+            nextWeekButtonDisabled()
+            {
+                if(this.week>=8)
+                {
+                    return true;
+                }
+                return false;
+            }
+        },
+    created() {
+        this.weeklyMatchCall()
+    },
+    methods:{
+      weeklyMatchCall()
+      {
+          Match.getWeeksMatch(this.week).then(response=>{
+           this.weeklyMatch = response.data;
+          })
+      },
+      goNextWeek()
+      {
+          this.week = this.week+1;
+          this.weeklyMatchCall();
+      }
+    }
 }
 </script>
