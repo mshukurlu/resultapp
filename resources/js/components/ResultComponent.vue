@@ -22,41 +22,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Chelsea</td>
-                                <td>13</td>
-                                <td>5</td>
-                                <td>4</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>14</td>
-                            </tr>
-                            <tr>
-                                <td>Arsenal</td>
-                                <td>13</td>
-                                <td>5</td>
-                                <td>4</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>14</td>
-                            </tr>
-                            <tr>
-                                <td>Manchester City</td>
-                                <td>13</td>
-                                <td>5</td>
-                                <td>4</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>14</td>
-                            </tr>
-                            <tr>
-                                <td>Liverpool</td>
-                                <td>13</td>
-                                <td>5</td>
-                                <td>4</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>14</td>
+
+                            <tr v-for="item in this.results">
+                                <td>{{ item.team }}</td>
+                                <td>{{item.pts}}</td>
+                                <td>{{item.p}}</td>
+                                <td>{{item.w}}</td>
+                                <td>{{item.d}}</td>
+                                <td>{{item.l}}</td>
+                                <td>{{item.gd}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -130,13 +104,15 @@
 </template>
 <script>
 import Match from "../apis/Match";
+import Statistic from "../apis/Statistic";
 export default {
 
   data()
   {
       return {
           week:1,
-          weeklyMatch: {}
+          weeklyMatch: {},
+          results:[]
       }
   },
     computed:
@@ -158,6 +134,9 @@ export default {
       {
           Match.getWeeksMatch(this.week).then(response=>{
            this.weeklyMatch = response.data;
+            Statistic.getTable().then(result=>{
+               this.results = result.data;
+            })
           })
       },
       goNextWeek()

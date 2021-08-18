@@ -9,6 +9,9 @@ class WeeklySimulation{
         if($numberOfWeek>8)
         {
             abort(404);
+        }elseif($numberOfWeek==1)
+        {
+            $this->resetMatchScores();
         }
 
         $getWeeksMatch = Match::where('week',$numberOfWeek)
@@ -28,8 +31,9 @@ class WeeklySimulation{
         return  $getWeeksMatch;
     }
 
-    public function getWeeklyPoints(int $numberOfWeek) : array
+    public function resetMatchScores()
     {
-
+        Match::query()
+            ->update(['host_team_goals'=>0,'guest_team_goals'=>0,'played_at'=>null]);
     }
 }

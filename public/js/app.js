@@ -1881,32 +1881,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _apis_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Match */ "./resources/js/apis/Match.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Statistic */ "./resources/js/apis/Statistic.js");
 //
 //
 //
@@ -2012,11 +1987,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       week: 1,
-      weeklyMatch: {}
+      weeklyMatch: {},
+      results: []
     };
   },
   computed: {
@@ -2037,6 +2014,9 @@ __webpack_require__.r(__webpack_exports__);
 
       _apis_Match__WEBPACK_IMPORTED_MODULE_0__.default.getWeeksMatch(this.week).then(function (response) {
         _this.weeklyMatch = response.data;
+        _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__.default.getTable().then(function (result) {
+          _this.results = result.data;
+        });
       });
     },
     goNextWeek: function goNextWeek() {
@@ -2086,6 +2066,28 @@ var END_POINT = 'weekly-match';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getWeeksMatch: function getWeeksMatch(week) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT + '/' + week);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/apis/Statistic.js":
+/*!****************************************!*\
+  !*** ./resources/js/apis/Statistic.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/apis/Api.js");
+
+var END_POINT = 'table';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getTable: function getTable() {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT);
   }
 });
 
@@ -37804,7 +37806,31 @@ var render = function() {
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6" }, [
-            _vm._m(0),
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(this.results, function(item) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(item.team))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.pts))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.p))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.w))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.d))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.l))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.gd))])
+                  ])
+                }),
+                0
+              )
+            ]),
             _vm._v(" "),
             _c(
               "button",
@@ -37873,89 +37899,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table table-striped" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Teams")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("PTS")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("P")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("W")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("D")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("td", [_vm._v("Chelsea")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("13")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("5")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("14")])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Teams")]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("Arsenal")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("13")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("5")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("14")])
-        ]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("PTS")]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("Manchester City")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("13")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("5")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("14")])
-        ]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("P")]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("Liverpool")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("13")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("5")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("14")])
-        ])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("W")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("D")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
       ])
     ])
   },
