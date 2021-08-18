@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Simulation\MatchController;
 use App\Http\Controllers\Simulation\StatisticsController;
+use App\Http\Controllers\Simulation\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,5 @@ Route::group(['prefix'=>'simulation'],function(){
     Route::get('weekly-match/{week}',
         [MatchController::class,'weeksMatch']);
     Route::get('table',[StatisticsController::class,'getResults']);
+    Route::get('teams',[TeamController::class,'all']);
 });

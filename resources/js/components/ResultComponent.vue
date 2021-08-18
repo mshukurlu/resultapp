@@ -1,5 +1,40 @@
 <template>
     <div>
+       <div v-if="this.week===0">
+           <div class="row">
+               <div class="col-md-12">
+
+                   <table class="table table-striped">
+                       <thead>
+                       <tr>
+                           <th scope="col">Teams</th>
+                           <th scope="col">PTS</th>
+                           <th scope="col">P</th>
+                           <th scope="col">W</th>
+                           <th scope="col">D</th>
+                           <th scope="col">L</th>
+                           <th scope="col">GD</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+
+                       <tr v-for="team in this.teams">
+                           <td>{{ team.name }}</td>
+                           <td>0</td>
+                           <td>0</td>
+                           <td>0</td>
+                           <td>0</td>
+                           <td>0</td>
+                           <td>0</td>
+                       </tr>
+                       </tbody>
+                   </table>
+
+                   <button @click="startSimulation()" :disabled="this.nextWeekButtonDisabled">Start Simulation</button>
+               </div>
+       </div>
+       </div>
+ <div v-else>
         <div class="row text-center mb-5">
             <h2> Week {{this.week}} match result</h2>
         </div>
@@ -99,20 +134,22 @@
 
             </div>
         </div>
-
+ </div>
     </div>
 </template>
 <script>
 import Match from "../apis/Match";
 import Statistic from "../apis/Statistic";
+import Team from "../apis/Team";
 export default {
 
   data()
   {
       return {
-          week:1,
+          week:0,
           weeklyMatch: [],
-          results:[]
+          results:[],
+          teams:[]
       }
   },
     computed:
@@ -127,7 +164,10 @@ export default {
             }
         },
     created() {
-        this.weeklyMatchCall()
+       Team.all().then(result=>{
+           this.teams = result.data;
+       });
+      //  this.weeklyMatchCall()
     },
     methods:{
       weeklyMatchCall()
@@ -143,7 +183,11 @@ export default {
       {
           this.week = this.week+1;
           this.weeklyMatchCall();
-      }
+      },
+        startSimulation()
+        {
+            this.week = 1;
+        }
     }
 }
 </script>

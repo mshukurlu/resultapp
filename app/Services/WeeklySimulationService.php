@@ -3,7 +3,7 @@ namespace App\Services;
 use App\Models\Match;
 use Carbon\Carbon;
 
-class WeeklySimulation{
+class WeeklySimulationService{
     public function weeklyGameSimulation(int $numberOfWeek)
     {
         if($numberOfWeek>6)

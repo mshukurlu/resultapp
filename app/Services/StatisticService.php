@@ -6,7 +6,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 
-class Statistic
+class StatisticService
 {
     public function getTable()
     {

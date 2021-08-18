@@ -8,14 +8,14 @@ use App\Http\Resources\MatchResource;
 use App\Models\Match;
 use App\Models\Team;
 use App\Models\User;
-use App\Services\WeeklySimulation;
+use App\Services\WeeklySimulationService;
 use Illuminate\Http\Request;
 
 class MatchController extends Controller
 {
     public function weeksMatch(int $numberOfWeek)
     {
-        $getThisWeeksMatches = (new WeeklySimulation())
+        $getThisWeeksMatches = (new WeeklySimulationService())
             ->weeklyGameSimulation($numberOfWeek);
 
         return MatchResource::collection($getThisWeeksMatches);

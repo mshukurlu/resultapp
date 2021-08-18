@@ -1882,6 +1882,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _apis_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Match */ "./resources/js/apis/Match.js");
 /* harmony import */ var _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Statistic */ "./resources/js/apis/Statistic.js");
+/* harmony import */ var _apis_Team__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../apis/Team */ "./resources/js/apis/Team.js");
 //
 //
 //
@@ -1986,14 +1987,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      week: 1,
+      week: 0,
       weeklyMatch: [],
-      results: []
+      results: [],
+      teams: []
     };
   },
   computed: {
@@ -2006,22 +2044,29 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.weeklyMatchCall();
+    var _this = this;
+
+    _apis_Team__WEBPACK_IMPORTED_MODULE_2__.default.all().then(function (result) {
+      _this.teams = result.data;
+    }); //  this.weeklyMatchCall()
   },
   methods: {
     weeklyMatchCall: function weeklyMatchCall() {
-      var _this = this;
+      var _this2 = this;
 
       _apis_Match__WEBPACK_IMPORTED_MODULE_0__.default.getWeeksMatch(this.week).then(function (response) {
-        _this.weeklyMatch = response.data.data;
+        _this2.weeklyMatch = response.data.data;
         _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__.default.getTable().then(function (result) {
-          _this.results = result.data;
+          _this2.results = result.data;
         });
       });
     },
     goNextWeek: function goNextWeek() {
       this.week = this.week + 1;
       this.weeklyMatchCall();
+    },
+    startSimulation: function startSimulation() {
+      this.week = 1;
     }
   }
 });
@@ -2087,6 +2132,28 @@ __webpack_require__.r(__webpack_exports__);
 var END_POINT = 'table';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getTable: function getTable() {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/apis/Team.js":
+/*!***********************************!*\
+  !*** ./resources/js/apis/Team.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/apis/Api.js");
+
+var END_POINT = 'teams';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  all: function all() {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT);
   }
 });
@@ -37798,110 +37865,184 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row text-center mb-5" }, [
-      _c("h2", [_vm._v(" Week " + _vm._s(this.week) + " match result")])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("table", { staticClass: "table table-striped" }, [
-              _vm._m(0),
+    this.week === 0
+      ? _c("div", [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("table", { staticClass: "table table-striped" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(this.teams, function(team) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(team.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("0")])
+                    ])
+                  }),
+                  0
+                )
+              ]),
               _vm._v(" "),
               _c(
-                "tbody",
-                _vm._l(this.results, function(item) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(item.team))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.pts))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.p))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.w))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.d))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.l))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.gd))])
-                  ])
-                }),
-                0
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                attrs: { disabled: this.nextWeekButtonDisabled },
-                on: {
-                  click: function($event) {
-                    return _vm.goNextWeek()
+                "button",
+                {
+                  attrs: { disabled: this.nextWeekButtonDisabled },
+                  on: {
+                    click: function($event) {
+                      return _vm.startSimulation()
+                    }
                   }
-                }
-              },
-              [_vm._v("Next Week")]
-            )
+                },
+                [_vm._v("Start Simulation")]
+              )
+            ])
+          ])
+        ])
+      : _c("div", [
+          _c("div", { staticClass: "row text-center mb-5" }, [
+            _c("h2", [_vm._v(" Week " + _vm._s(this.week) + " match result")])
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-6" },
-            [
-              _c(
-                "p",
-                {
-                  staticStyle: { "text-align": "center", "font-weight": "bold" }
-                },
-                [_vm._v(_vm._s(this.week) + " week Match Results")]
-              ),
-              _vm._v(" "),
-              _vm._l(this.weeklyMatch, function(match) {
-                return _c("div", { staticStyle: { display: "flex" } }, [
-                  _c("div", { staticStyle: { flex: "1 0" } }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(match.host_team_name) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticStyle: { padding: "0 5px" } }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(match.host_team_goals) +
-                        " - " +
-                        _vm._s(match.guest_team_goals) +
-                        "\n                        "
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-8" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("table", { staticClass: "table table-striped" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(this.results, function(item) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(item.team))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.pts))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.p))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.w))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.d))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.l))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.gd))])
+                        ])
+                      }),
+                      0
                     )
                   ]),
                   _vm._v(" "),
                   _c(
-                    "div",
-                    { staticStyle: { flex: "1 0", "text-align": "right" } },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(match.guest_team_name) +
-                          "\n                        "
-                      )
-                    ]
+                    "button",
+                    {
+                      attrs: { disabled: this.nextWeekButtonDisabled },
+                      on: {
+                        click: function($event) {
+                          return _vm.goNextWeek()
+                        }
+                      }
+                    },
+                    [_vm._v("Next Week")]
                   )
-                ])
-              })
-            ],
-            2
-          )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-6" },
+                  [
+                    _c(
+                      "p",
+                      {
+                        staticStyle: {
+                          "text-align": "center",
+                          "font-weight": "bold"
+                        }
+                      },
+                      [_vm._v(_vm._s(this.week) + " week Match Results")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(this.weeklyMatch, function(match) {
+                      return _c("div", { staticStyle: { display: "flex" } }, [
+                        _c("div", { staticStyle: { flex: "1 0" } }, [
+                          _vm._v(
+                            "\n                               " +
+                              _vm._s(match.host_team_name) +
+                              "\n                           "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticStyle: { padding: "0 5px" } }, [
+                          _vm._v(
+                            "\n                               " +
+                              _vm._s(match.host_team_goals) +
+                              " - " +
+                              _vm._s(match.guest_team_goals) +
+                              "\n                           "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticStyle: { flex: "1 0", "text-align": "right" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                               " +
+                                _vm._s(match.guest_team_name) +
+                                "\n                           "
+                            )
+                          ]
+                        )
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(1)
-    ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Teams")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("PTS")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("P")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("W")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("D")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -37934,43 +38075,49 @@ var staticRenderFns = [
       _c("table", { staticClass: "table" }, [
         _c("tr", [
           _c("td", [
-            _vm._v("\n                        Chelsea\n                    ")
+            _vm._v(
+              "\n                           Chelsea\n                       "
+            )
           ]),
           _vm._v(" "),
           _c("td", [
-            _vm._v("\n                        45%\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [
-            _vm._v("\n                        Arsenal\n                    ")
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v("\n                        45%\n                    ")
+            _vm._v("\n                           45%\n                       ")
           ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [
             _vm._v(
-              "\n                        Manchester City\n                    "
+              "\n                           Arsenal\n                       "
             )
           ]),
           _vm._v(" "),
           _c("td", [
-            _vm._v("\n                        45%\n                    ")
+            _vm._v("\n                           45%\n                       ")
           ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [
-            _vm._v("\n                        Liverpool\n                    ")
+            _vm._v(
+              "\n                           Manchester City\n                       "
+            )
           ]),
           _vm._v(" "),
           _c("td", [
-            _vm._v("\n                        45%\n                    ")
+            _vm._v("\n                           45%\n                       ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [
+            _vm._v(
+              "\n                           Liverpool\n                       "
+            )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _vm._v("\n                           45%\n                       ")
           ])
         ])
       ])
