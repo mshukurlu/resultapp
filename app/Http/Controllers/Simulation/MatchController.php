@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Simulation;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MatchCollection;
 use App\Http\Resources\MatchResource;
+use App\Models\Match;
+use App\Models\Team;
+use App\Models\User;
 use App\Services\WeeklySimulation;
 use Illuminate\Http\Request;
 
@@ -14,6 +18,6 @@ class MatchController extends Controller
         $getThisWeeksMatches = (new WeeklySimulation())
             ->weeklyGameSimulation($numberOfWeek);
 
-        return response()->json(new MatchResource($getThisWeeksMatches));
+        return MatchResource::collection($getThisWeeksMatches);
     }
 }

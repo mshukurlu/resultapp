@@ -1992,13 +1992,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       week: 1,
-      weeklyMatch: {},
+      weeklyMatch: [],
       results: []
     };
   },
   computed: {
     nextWeekButtonDisabled: function nextWeekButtonDisabled() {
-      if (this.week >= 8) {
+      if (this.week >= 6) {
         return true;
       }
 
@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       _apis_Match__WEBPACK_IMPORTED_MODULE_0__.default.getWeeksMatch(this.week).then(function (response) {
-        _this.weeklyMatch = response.data;
+        _this.weeklyMatch = response.data.data;
         _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__.default.getTable().then(function (result) {
           _this.results = result.data;
         });
@@ -37846,47 +37846,54 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "p",
-              {
-                staticStyle: { "text-align": "center", "font-weight": "bold" }
-              },
-              [_vm._v(_vm._s(this.week) + " week Match Results")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticStyle: { display: "flex" } }, [
-              _c("div", { staticStyle: { flex: "1 0" } }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(this.weeklyMatch.host_team_name) +
-                    "\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticStyle: { padding: "0 5px" } }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(this.weeklyMatch.host_team_goals) +
-                    " - " +
-                    _vm._s(this.weeklyMatch.guest_team_goals) +
-                    "\n                        "
-                )
-              ]),
-              _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [
               _c(
-                "div",
-                { staticStyle: { flex: "1 0", "text-align": "right" } },
-                [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(this.weeklyMatch.guest_team_name) +
-                      "\n                        "
+                "p",
+                {
+                  staticStyle: { "text-align": "center", "font-weight": "bold" }
+                },
+                [_vm._v(_vm._s(this.week) + " week Match Results")]
+              ),
+              _vm._v(" "),
+              _vm._l(this.weeklyMatch, function(match) {
+                return _c("div", { staticStyle: { display: "flex" } }, [
+                  _c("div", { staticStyle: { flex: "1 0" } }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(match.host_team_name) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { padding: "0 5px" } }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(match.host_team_goals) +
+                        " - " +
+                        _vm._s(match.guest_team_goals) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticStyle: { flex: "1 0", "text-align": "right" } },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(match.guest_team_name) +
+                          "\n                        "
+                      )
+                    ]
                   )
-                ]
-              )
-            ])
-          ])
+                ])
+              })
+            ],
+            2
+          )
         ])
       ]),
       _vm._v(" "),

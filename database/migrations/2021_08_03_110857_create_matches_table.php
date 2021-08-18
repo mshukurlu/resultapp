@@ -18,8 +18,8 @@ class CreateMatchesTable extends Migration
             $table->integer('host_team_id')->index();
             $table->integer('guest_team_id')->index();
             $table->integer('week');
-            $table->integer('host_team_goals')->unsigned()->default('0');
-            $table->integer('guest_team_goals')->unsigned()->default('0');
+            $table->integer('host_team_goals')->default('0');
+            $table->integer('guest_team_goals')->default('0');
             $table->timestamps();
         });
     }

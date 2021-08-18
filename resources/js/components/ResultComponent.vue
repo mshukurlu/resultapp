@@ -41,15 +41,15 @@
                     <div class="col-md-6">
                         <p style="text-align: center; font-weight: bold">{{this.week}} week Match Results</p>
 
-                        <div style="display: flex">
+                        <div v-for="match in this.weeklyMatch" style="display: flex">
                             <div style="flex: 1 0">
-                                {{ this.weeklyMatch.host_team_name }}
+                                {{ match.host_team_name }}
                             </div>
                             <div style="padding: 0 5px">
-                                {{this.weeklyMatch.host_team_goals}} - {{this.weeklyMatch.guest_team_goals}}
+                                {{match.host_team_goals}} - {{match.guest_team_goals}}
                             </div>
                             <div style="flex:1 0;text-align: right">
-                                {{ this.weeklyMatch.guest_team_name }}
+                                {{ match.guest_team_name }}
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ export default {
   {
       return {
           week:1,
-          weeklyMatch: {},
+          weeklyMatch: [],
           results:[]
       }
   },
@@ -119,7 +119,7 @@ export default {
         {
             nextWeekButtonDisabled()
             {
-                if(this.week>=8)
+                if(this.week>=6)
                 {
                     return true;
                 }
@@ -133,7 +133,7 @@ export default {
       weeklyMatchCall()
       {
           Match.getWeeksMatch(this.week).then(response=>{
-           this.weeklyMatch = response.data;
+           this.weeklyMatch = response.data.data;
             Statistic.getTable().then(result=>{
                this.results = result.data;
             })
