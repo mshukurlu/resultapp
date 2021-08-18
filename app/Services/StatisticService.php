@@ -36,6 +36,6 @@ class StatisticService
     ) as match_team
     JOIN teams t ON match_team.Team=t.id
     GROUP BY Team
-    ORDER BY SUM(Pts) DESC');
+    ORDER BY SUM(Pts) DESC,SUM(GD) DESC');
     }
 }
