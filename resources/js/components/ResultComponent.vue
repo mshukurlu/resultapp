@@ -167,7 +167,6 @@ export default {
        Team.all().then(result=>{
            this.teams = result.data;
        });
-      //  this.weeklyMatchCall()
     },
     methods:{
       weeklyMatchCall()

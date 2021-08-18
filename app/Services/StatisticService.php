@@ -16,7 +16,7 @@ class StatisticService
     FROM(
       SELECT
         host_team_id Team,
-        1 P,
+        IF(played_at is NOT NULL,1,0) P,
         IF(host_team_goals > guest_team_goals,1,0) W,
         IF(host_team_goals = guest_team_goals,1,0) D,
         IF(host_team_goals < guest_team_goals,1,0) L,
@@ -26,7 +26,7 @@ class StatisticService
       UNION ALL
       SELECT
         guest_team_id,
-        1,
+        IF(played_at is NOT NULL,1,0) P,
         IF(host_team_goals < guest_team_goals,1,0),
         IF(host_team_goals = guest_team_goals,1,0),
         IF(host_team_goals > guest_team_goals,1,0),

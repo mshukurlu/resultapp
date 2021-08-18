@@ -2048,7 +2048,7 @@ __webpack_require__.r(__webpack_exports__);
 
     _apis_Team__WEBPACK_IMPORTED_MODULE_2__.default.all().then(function (result) {
       _this.teams = result.data;
-    }); //  this.weeklyMatchCall()
+    });
   },
   methods: {
     weeklyMatchCall: function weeklyMatchCall() {

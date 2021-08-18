@@ -11,6 +11,7 @@ class TeamController extends Controller
 {
     public function all()
     {
-        return response()->json((new TeamService())->all());
+        return response()->json((new TeamService())
+            ->all());
     }
 }
