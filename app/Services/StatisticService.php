@@ -21,7 +21,7 @@ class StatisticService
         IF(host_team_goals = guest_team_goals,IF(played_at is not null,1,0),0) D,
         IF(host_team_goals < guest_team_goals,1,0) L,
         host_team_goals-guest_team_goals GD,
-        CASE WHEN host_team_goals > guest_team_goals THEN 3 WHEN host_team_goals = guest_team_goals THEN 1 ELSE 0 END PTS
+        CASE WHEN host_team_goals > guest_team_goals THEN IF(played_at is not null,3,0) WHEN host_team_goals = guest_team_goals THEN IF(played_at is not null,1,0) ELSE 0 END PTS
       FROM matches
       UNION ALL
       SELECT
@@ -31,11 +31,11 @@ class StatisticService
         IF(host_team_goals = guest_team_goals,IF(played_at is not null,1,0),0),
         IF(host_team_goals > guest_team_goals,1,0),
         guest_team_goals-host_team_goals GD,
-        CASE WHEN host_team_goals < guest_team_goals THEN 3 WHEN host_team_goals = guest_team_goals THEN 1 ELSE 0 END
+        CASE WHEN host_team_goals < guest_team_goals THEN IF(played_at is not null,3,0) WHEN host_team_goals = guest_team_goals THEN IF(played_at is not null,1,0) ELSE 0 END
       FROM matches
     ) as match_team
     JOIN teams t ON match_team.Team=t.id
     GROUP BY Team
-    ORDER BY SUM(Pts),team DESC');
+    ORDER BY SUM(Pts) DESC');
     }
 }
