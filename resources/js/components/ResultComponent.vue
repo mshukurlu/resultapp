@@ -187,6 +187,7 @@ export default {
         startSimulation()
         {
             this.week = 1;
+            this.weeklyMatchCall();
         }
     }
 }

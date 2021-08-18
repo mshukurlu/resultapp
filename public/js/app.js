@@ -2067,6 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     startSimulation: function startSimulation() {
       this.week = 1;
+      this.weeklyMatchCall();
     }
   }
 });
