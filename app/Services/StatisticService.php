@@ -18,7 +18,7 @@ class StatisticService
         host_team_id Team,
         IF(played_at is NOT NULL,1,0) P,
         IF(host_team_goals > guest_team_goals,1,0) W,
-        IF(host_team_goals = guest_team_goals,1,0) D,
+        IF(host_team_goals = guest_team_goals,IF(played_at is not null,1,0),0) D,
         IF(host_team_goals < guest_team_goals,1,0) L,
         host_team_goals-guest_team_goals GD,
         CASE WHEN host_team_goals > guest_team_goals THEN 3 WHEN host_team_goals = guest_team_goals THEN 1 ELSE 0 END PTS
@@ -28,7 +28,7 @@ class StatisticService
         guest_team_id,
         IF(played_at is NOT NULL,1,0) P,
         IF(host_team_goals < guest_team_goals,1,0),
-        IF(host_team_goals = guest_team_goals,1,0),
+        IF(host_team_goals = guest_team_goals,IF(played_at is not null,1,0),0),
         IF(host_team_goals > guest_team_goals,1,0),
         guest_team_goals-host_team_goals GD,
         CASE WHEN host_team_goals < guest_team_goals THEN 3 WHEN host_team_goals = guest_team_goals THEN 1 ELSE 0 END
