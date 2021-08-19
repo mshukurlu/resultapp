@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Match;
 use Illuminate\Support\Facades\DB;
 
 class StatisticService
@@ -58,5 +59,11 @@ class StatisticService
     JOIN teams t ON match_team.Team=t.id
     GROUP BY Team
     ORDER BY SUM(Pts) DESC');
+    }
+
+    public function reset()
+    {
+        Match::query()
+            ->update(['host_team_goals'=>0,'guest_team_goals'=>0,'played_at'=>null]);
     }
 }

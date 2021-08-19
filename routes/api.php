@@ -22,6 +22,8 @@ Route::group(['prefix'=>'simulation'],function(){
     Route::get('weekly-match/{week}',
         [MatchController::class,'weeksMatch']);
     Route::get('table',[StatisticsController::class,'getResults']);
+    Route::delete('table',[StatisticsController::class,'reset']);
     Route::get('teams',[TeamController::class,'all']);
     Route::get('predection',[PredictionController::class,'result']);
+
 });

@@ -10,12 +10,25 @@ use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
 {
+    protected $statisticService;
+    public function __construct(StatisticService $statisticService)
+    {
+        $this->statisticService = $statisticService;
+    }
+
     public function getResults()
     {
-        $getAllPoints = (new StatisticService())
+        $getAllPoints = $this->statisticService
             ->getTable();
 
         return response()->json(
             new WeeklyResultsResource($getAllPoints));
+    }
+
+    public function reset()
+    {
+        $this->statisticService->reset();
+
+        return response()->json(['messsage'=>'Statistik cleared successfully']);
     }
 }

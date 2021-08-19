@@ -9,9 +9,6 @@ class WeeklySimulationService{
         if($numberOfWeek>6)
         {
             abort(404);
-        }elseif($numberOfWeek==1)
-        {
-            $this->resetMatchScores();
         }
 
         $getWeeksMatches = Match::where('week',$numberOfWeek)
@@ -28,11 +25,5 @@ class WeeklySimulationService{
             }
         }
         return  $getWeeksMatches;
-    }
-
-    public function resetMatchScores()
-    {
-        Match::query()
-            ->update(['host_team_goals'=>0,'guest_team_goals'=>0,'played_at'=>null]);
     }
 }

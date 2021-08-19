@@ -1998,6 +1998,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2027,6 +2046,14 @@ __webpack_require__.r(__webpack_exports__);
     _apis_Team__WEBPACK_IMPORTED_MODULE_2__.default.all().then(function (result) {
       _this.teams = result.data;
     });
+
+    if (this.week === 0) {
+      _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__.default.reset().then(function (result) {
+        _apis_Predection__WEBPACK_IMPORTED_MODULE_3__.default.getPrediction().then(function (predectionResult) {
+          _this.predectionResult = predectionResult.data;
+        });
+      });
+    }
   },
   methods: {
     weeklyMatchCall: function weeklyMatchCall() {
@@ -2143,6 +2170,9 @@ var END_POINT = 'table';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getTable: function getTable() {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT);
+  },
+  reset: function reset() {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.delete(END_POINT);
   }
 });
 
@@ -37878,7 +37908,7 @@ var render = function() {
     this.week === 0
       ? _c("div", [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "col-md-6" }, [
               _c("table", { staticClass: "table table-striped" }, [
                 _vm._m(0),
                 _vm._v(" "),
@@ -37916,6 +37946,35 @@ var render = function() {
                   }
                 },
                 [_vm._v("Start Simulation")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h3", [_vm._v("Prematch Prediction")]),
+              _vm._v(" "),
+              _c(
+                "table",
+                { staticClass: "table" },
+                _vm._l(this.predectionResult, function(predection) {
+                  return _c("tr", [
+                    _c("td", [
+                      _vm._v(
+                        "\n                              " +
+                          _vm._s(_vm.teamIdToName(predection.team_id)) +
+                          "\n                          "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        "\n                              " +
+                          _vm._s(predection.percentage) +
+                          " %\n                          "
+                      )
+                    ])
+                  ])
+                }),
+                0
               )
             ])
           ])

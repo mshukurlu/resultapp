@@ -2,7 +2,7 @@
     <div>
        <div v-if="this.week===0">
            <div class="row">
-               <div class="col-md-12">
+               <div class="col-md-6">
 
                    <table class="table table-striped">
                        <thead>
@@ -32,6 +32,25 @@
 
                    <button @click="startSimulation()" :disabled="this.nextWeekButtonDisabled">Start Simulation</button>
                </div>
+
+               <div class="col-md-4">
+
+                   <h3>Prematch Prediction</h3>
+                   <table class="table">
+
+                       <tr v-for="predection in this.predectionResult">
+                           <td>
+                               {{teamIdToName(predection.team_id)}}
+                           </td>
+                           <td>
+                               {{predection.percentage}} %
+                           </td>
+                       </tr>
+                   </table>
+
+
+               </div>
+
        </div>
        </div>
  <div v-else>
@@ -144,6 +163,14 @@ export default {
        Team.all().then(result=>{
            this.teams = result.data;
        });
+       if(this.week===0)
+       {
+           Statistic.reset().then(result=>{
+               Predection.getPrediction().then(predectionResult=>{
+                   this.predectionResult = predectionResult.data;
+               })
+           })
+       }
     },
     methods:{
       weeklyMatchCall()
