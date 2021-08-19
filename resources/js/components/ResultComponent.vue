@@ -73,7 +73,7 @@
                         <button @click="goNextWeek()" :disabled="this.nextWeekButtonDisabled">Next Week</button>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 pt-2" style="border: 1px solid;">
                         <p style="text-align: center; font-weight: bold">{{this.week}} week Match Results</p>
 
                         <div v-for="match in this.weeklyMatch" style="display: flex">
@@ -96,37 +96,12 @@
                 <h3>Prediction</h3>
                 <table class="table">
 
-                    <tr>
+                    <tr v-for="predection in this.predectionResult">
                         <td>
-                            Chelsea
+                            {{teamIdToName(predection.team_id)}}
                         </td>
                         <td>
-                            45%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Arsenal
-                        </td>
-                        <td>
-                            45%
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Manchester City
-                        </td>
-                        <td>
-                            45%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Liverpool
-                        </td>
-                        <td>
-                            45%
+                            {{predection.percentage}} %
                         </td>
                     </tr>
                 </table>
@@ -141,6 +116,7 @@
 import Match from "../apis/Match";
 import Statistic from "../apis/Statistic";
 import Team from "../apis/Team";
+import Predection from "../apis/Predection";
 export default {
 
   data()
@@ -149,7 +125,8 @@ export default {
           week:0,
           weeklyMatch: [],
           results:[],
-          teams:[]
+          teams:[],
+          predectionResult:[]
       }
   },
     computed:
@@ -175,9 +152,20 @@ export default {
            this.weeklyMatch = response.data.data;
             Statistic.getTable().then(result=>{
                this.results = result.data;
+               Predection.getPrediction().then(predectionResult=>{
+                   this.predectionResult = predectionResult.data;
+               })
             })
           })
       },
+        teamIdToName(teamId)
+        {
+           const team = this.teams.find(item=>{
+                return item.id === teamId
+            })
+
+            return team.name;
+        },
       goNextWeek()
       {
           this.week = this.week+1;

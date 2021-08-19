@@ -1883,6 +1883,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apis_Match__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Match */ "./resources/js/apis/Match.js");
 /* harmony import */ var _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Statistic */ "./resources/js/apis/Statistic.js");
 /* harmony import */ var _apis_Team__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../apis/Team */ "./resources/js/apis/Team.js");
+/* harmony import */ var _apis_Predection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../apis/Predection */ "./resources/js/apis/Predection.js");
 //
 //
 //
@@ -1997,31 +1998,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2031,7 +2008,8 @@ __webpack_require__.r(__webpack_exports__);
       week: 0,
       weeklyMatch: [],
       results: [],
-      teams: []
+      teams: [],
+      predectionResult: []
     };
   },
   computed: {
@@ -2058,8 +2036,17 @@ __webpack_require__.r(__webpack_exports__);
         _this2.weeklyMatch = response.data.data;
         _apis_Statistic__WEBPACK_IMPORTED_MODULE_1__.default.getTable().then(function (result) {
           _this2.results = result.data;
+          _apis_Predection__WEBPACK_IMPORTED_MODULE_3__.default.getPrediction().then(function (predectionResult) {
+            _this2.predectionResult = predectionResult.data;
+          });
         });
       });
+    },
+    teamIdToName: function teamIdToName(teamId) {
+      var team = this.teams.find(function (item) {
+        return item.id === teamId;
+      });
+      return team.name;
     },
     goNextWeek: function goNextWeek() {
       this.week = this.week + 1;
@@ -2112,6 +2099,28 @@ var END_POINT = 'weekly-match';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getWeeksMatch: function getWeeksMatch(week) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT + '/' + week);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/apis/Predection.js":
+/*!*****************************************!*\
+  !*** ./resources/js/apis/Predection.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/apis/Api.js");
+
+var END_POINT = 'predection';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getPrediction: function getPrediction() {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get(END_POINT);
   }
 });
 
@@ -37962,7 +37971,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "col-md-6" },
+                  {
+                    staticClass: "col-md-6 pt-2",
+                    staticStyle: { border: "1px solid" }
+                  },
                   [
                     _c(
                       "p",
@@ -38016,7 +38028,34 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h3", [_vm._v("Prediction")]),
+              _vm._v(" "),
+              _c(
+                "table",
+                { staticClass: "table" },
+                _vm._l(this.predectionResult, function(predection) {
+                  return _c("tr", [
+                    _c("td", [
+                      _vm._v(
+                        "\n                           " +
+                          _vm._s(_vm.teamIdToName(predection.team_id)) +
+                          "\n                       "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        "\n                           " +
+                          _vm._s(predection.percentage) +
+                          " %\n                       "
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
           ])
         ])
   ])
@@ -38063,64 +38102,6 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("L")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("GD")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("h3", [_vm._v("Prediction")]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _c("tr", [
-          _c("td", [
-            _vm._v(
-              "\n                           Chelsea\n                       "
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v("\n                           45%\n                       ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [
-            _vm._v(
-              "\n                           Arsenal\n                       "
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v("\n                           45%\n                       ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [
-            _vm._v(
-              "\n                           Manchester City\n                       "
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v("\n                           45%\n                       ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [
-            _vm._v(
-              "\n                           Liverpool\n                       "
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v("\n                           45%\n                       ")
-          ])
-        ])
       ])
     ])
   }

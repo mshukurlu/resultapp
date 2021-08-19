@@ -27,7 +27,6 @@ class WeeklySimulationService{
                         'played_at' => Carbon::now()]);
             }
         }
-       // $getWeeksMatches->fresh();
         return  $getWeeksMatches;
     }
 
