@@ -23,8 +23,8 @@ class WeeklySimulationService{
             ->get();
         foreach ($getWeeksMatches as $match) {
             if (!$match->played_at) {
-                $minGoals = 0;
-                $maxGoals = 5;
+                $minGoals = config('simulation.minGoals');
+                $maxGoals = config('simulation.maxGoals');;
                 $guestTeamGoals = rand($minGoals, $maxGoals);
                 $hostTeamsGoals = rand($minGoals, $maxGoals);
                 $match->update(['host_team_goals' => $hostTeamsGoals,
