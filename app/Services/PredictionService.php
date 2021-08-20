@@ -5,8 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Match;
-use App\Models\Team;
-use App\Traits\PredictionHelperFunctions;
+use App\Traits\SimulateCalculationTrait;
+use App\Traits\SimulatePredectionTrait;
 
 /**
  * Class PredictionService
@@ -14,7 +14,7 @@ use App\Traits\PredictionHelperFunctions;
  */
 class PredictionService
 {
-    use PredictionHelperFunctions;
+    use SimulateCalculationTrait,SimulatePredectionTrait;
 
     /**
      * @return array
