@@ -8,7 +8,7 @@ use App\Models\Team;
 use App\Services\StatisticService;
 
 /**
- * Trait PredictionHelperFunctions
+ * Trait SimulateCalculationTrait
  * @package App\Traits
  */
 trait SimulateCalculationTrait
