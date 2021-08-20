@@ -11,8 +11,16 @@ use App\Models\User;
 use App\Services\WeeklySimulationService;
 use Illuminate\Http\Request;
 
+/**
+ * Class MatchController
+ * @package App\Http\Controllers\Simulation
+ */
 class MatchController extends Controller
 {
+    /**
+     * @param int $numberOfWeek
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function weeksMatch(int $numberOfWeek)
     {
         $getThisWeeksMatches = (new WeeklySimulationService())

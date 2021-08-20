@@ -7,9 +7,17 @@ use App\Models\Match;
 use App\Models\Team;
 use App\Services\StatisticService;
 
+/**
+ * Trait PredictionHelperFunctions
+ * @package App\Traits
+ */
 trait PredictionHelperFunctions
 {
 
+    /**
+     * @param $furtherMatches
+     * @return array
+     */
     private function simulateFurtherMatches($furtherMatches)
     {
         $options = array('minGoals' => config('simulation.minGoals'),
@@ -23,6 +31,11 @@ trait PredictionHelperFunctions
 
     }
 
+    /**
+     * @param $hostTeamGoals
+     * @param $guestTeamGoals
+     * @return int[]
+     */
     private function getPointsOfTeamsViaGoalCount($hostTeamGoals, $guestTeamGoals)
     {
         if ($hostTeamGoals == $guestTeamGoals) {
@@ -45,6 +58,11 @@ trait PredictionHelperFunctions
         return $points;
     }
 
+    /**
+     * @param $furtherMatches
+     * @param $options
+     * @return array
+     */
     private function weeklySimulations($furtherMatches, $options)
     {
         $weeklySimulation = array();
@@ -67,6 +85,10 @@ trait PredictionHelperFunctions
         return $weeklySimulation;
     }
 
+    /**
+     * @param $weeklySimulationResults
+     * @return array
+     */
     private function linearSumWeeklyPointsOfTeam($weeklySimulationResults)
     {
         $linearSum = array();
@@ -84,6 +106,10 @@ trait PredictionHelperFunctions
         return $linearSum;
     }
 
+    /**
+     * @param $simulatedMatchesResults
+     * @return mixed
+     */
     private function addOldPointsToFurtherMatchesSimulationResults($simulatedMatchesResults)
     {
         $teamsPoints = (new StatisticService())
@@ -99,6 +125,10 @@ trait PredictionHelperFunctions
         return $simulatedMatchesResults;
     }
 
+    /**
+     * @param $teamsPoints
+     * @return array
+     */
     private function winCountOfEveryTeam($teamsPoints)
     {
         $teamsIds = League::first()->teams()->pluck('id');
@@ -119,6 +149,12 @@ trait PredictionHelperFunctions
         return $teamWinCount;
     }
 
+    /**
+     * @param $rowIndex
+     * @param $teamPoints
+     * @param $teamIds
+     * @return int[]
+     */
     private function findWinTeamOnRow($rowIndex, $teamPoints, $teamIds)
     {
         $currentWinner = ['id' => 0, 'point' => 0];
@@ -134,6 +170,10 @@ trait PredictionHelperFunctions
         return $currentWinner;
     }
 
+    /**
+     * @param $winnerCounts
+     * @return array
+     */
     private function winnerCountInPercentage($winnerCounts)
     {
         $predictInPercentage = [];

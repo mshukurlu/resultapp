@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 
 class PredictionController extends Controller
 {
-   public function result()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function result()
    {
      $prediction = (new PredictionService())
            ->getPredictionResults();

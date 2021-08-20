@@ -7,9 +7,16 @@ namespace App\Services;
 use App\Models\Match;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class StatisticService
+ * @package App\Services
+ */
 class StatisticService
 {
     #I can translate those sql queries to Elqouent or QueryBuilder
+    /**
+     * @return array
+     */
     public function getTable()
     {
             return DB::select('SELECT
@@ -41,6 +48,9 @@ class StatisticService
     ORDER BY SUM(Pts) DESC,SUM(GD) DESC');
     }
 
+    /**
+     * @return array
+     */
     public function getAllTeamPoints()
     {
         return DB::select('SELECT
@@ -61,6 +71,9 @@ class StatisticService
     ORDER BY SUM(Pts) DESC');
     }
 
+    /**
+     *
+     */
     public function reset()
     {
         Match::query()
